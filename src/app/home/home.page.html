@@ -1,20 +1,59 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title> Restaurante Claretiano </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Restaurante Claretiano</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div id="today" (click)="setOpen(true)">
+      <span>Prato do Dia</span>
+    </div>
+    <div id="categories">
+      <div
+        *ngFor="let item of categories"
+        class="category"
+        [routerLink]="item.route"
+      >
+        <div class="icon">
+          <div id="overlay"></div>
+          <img [src]="item.icon" alt="lanches" />
+        </div>
+        <div class="details">
+          <span>{{item.name}}</span>
+        </div>
+      </div>
+    </div>
   </div>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Prato do Dia</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">Close</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-card *ngFor="let item of prato_do_dia">
+          <img alt="Silhouette of mountains" [src]="item.image" />
+          <ion-card-header>
+            <ion-card-title>{{item.name}}</ion-card-title>
+            <ion-card-subtitle>R${{item.price}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content> {{item.description}} </ion-card-content>
+        </ion-card>
+        <h3>Promoção</h3>
+        <span>Valor Normal: R${{total_price}}</span><br />
+        <span>Valor Promocional R${{discounted_price.toFixed(2)}}</span>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-content>

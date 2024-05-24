@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Lanches</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['/home']">Home</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div>
+    <ion-card (click)="setOpen(true, item)" *ngFor="let item of lanches">
+      <div class="image">
+        <img [alt]="item.name" [src]="item.image" />
+      </div>
+      <ion-card-header>
+        <ion-card-title>{{item.name}}</ion-card-title>
+        <ion-card-subtitle>R${{item.price}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-modal [isOpen]="isModalOpen">
+        <ng-template>
+          <ion-header>
+            <ion-toolbar>
+              <ion-title>{{open.name}}</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="setOpen(false)">Close</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+          </ion-header>
+          <ion-content class="ion-padding">
+            <div class="modal-image">
+              <img [src]="open.image" [alt]="open.name" />
+            </div>
+            <h3>R${{open.price}}</h3>
+            <p>{{open.description}}</p>
+          </ion-content>
+        </ng-template>
+      </ion-modal>
+    </ion-card>
+  </div>
+</ion-content>
